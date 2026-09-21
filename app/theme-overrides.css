@@ -1,0 +1,17 @@
+:root { --site-accent:#ff382e; --site-accent-rgb:255,56,46; }
+html, body, .siteHeader, .footer { transition:background-color .55s,color .55s,border-color .55s; }
+::selection { color:#060606; background:var(--site-accent); }
+* { scrollbar-color:var(--site-accent) #101010; }
+body.themePulse::after { content:''; position:fixed; z-index:9999; inset:0; pointer-events:none; background:var(--site-accent); mix-blend-mode:screen; animation:siteThemeFlash .55s ease-out forwards; }
+body:has(.showcaseStack) .siteHeader .brandMark { background:var(--site-accent) !important; }
+body:has(.showcaseStack) .siteHeader { border-color:color-mix(in srgb,var(--site-accent) 22%,#292929) !important; }
+.showcaseStack > section:first-child { --red:var(--site-accent) !important; }
+.showcaseStack > section:first-child button { border-color:color-mix(in srgb,var(--site-accent) 72%,white) !important; background:var(--site-accent) !important; }
+.showcaseStack > section:first-child a { transition:color .4s,border-color .4s,background .4s; }
+.showcaseStack > section:first-child + section { border-color:color-mix(in srgb,var(--site-accent) 24%,#292929) !important; }
+.showcaseStack > div:last-child { --red:var(--site-accent) !important; }
+.showcaseStack > div:last-child a:hover { border-color:var(--site-accent); }
+body[data-color-mode='motion'] .showcaseStack > section:first-child { filter:saturate(1.08) hue-rotate(0deg); }
+body[data-color-mode='code'] .showcaseStack > section:first-child { filter:saturate(1.04); }
+@keyframes siteThemeFlash { 0%{opacity:.24} 100%{opacity:0} }
+@media(prefers-reduced-motion:reduce){html,body,.siteHeader,.footer{transition:none}body.themePulse::after{display:none}}

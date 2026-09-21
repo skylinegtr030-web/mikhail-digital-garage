@@ -1,17 +1,38 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styles from './CreativeBridge.module.css';
 
 const modes = [
-  { id: '01', key: 'visual', title: 'VISUAL', ru: 'ВИЗУАЛ', text: 'Композиция, типографика и цвет превращают содержание в узнаваемый образ.' },
-  { id: '02', key: 'motion', title: 'MOTION', ru: 'ДВИЖЕНИЕ', text: 'Анимация связывает состояния интерфейса и управляет вниманием человека.' },
-  { id: '03', key: 'code', title: 'CODE', ru: 'КОД', text: 'Разработка превращает идею в быстрый, адаптивный и работающий продукт.' }
+  { id: '01', key: 'visual', title: 'VISUAL', ru: 'ВИЗУАЛ', color: '#ff382e', rgb: '255,56,46', text: 'Композиция, типографика и цвет превращают содержание в узнаваемый образ.' },
+  { id: '02', key: 'motion', title: 'MOTION', ru: 'ДВИЖЕНИЕ', color: '#8c67ff', rgb: '140,103,255', text: 'Анимация связывает состояния интерфейса и управляет вниманием человека.' },
+  { id: '03', key: 'code', title: 'CODE', ru: 'КОД', color: '#34f58a', rgb: '52,245,138', text: 'Разработка превращает идею в быстрый, адаптивный и работающий продукт.' }
 ];
 
 export default function CreativeBridge() {
   const [active, setActive] = useState(1);
   const scene = useRef(null);
+
+  useEffect(() => {
+    const mode = modes[active];
+    const root = document.documentElement;
+    root.style.setProperty('--site-accent', mode.color);
+    root.style.setProperty('--site-accent-rgb', mode.rgb);
+    document.body.dataset.colorMode = mode.key;
+    sessionStorage.setItem('site-color-mode', mode.key);
+    document.body.classList.remove('themePulse');
+    void document.body.offsetWidth;
+    document.body.classList.add('themePulse');
+    const timer = setTimeout(() => document.body.classList.remove('themePulse'), 600);
+    window.dispatchEvent(new CustomEvent('site:color', { detail: mode }));
+    return () => clearTimeout(timer);
+  }, [active]);
+
+  useEffect(() => {
+    const saved = sessionStorage.getItem('site-color-mode');
+    const index = modes.findIndex(mode => mode.key === saved);
+    if (index >= 0) setActive(index);
+  }, []);
 
   const move = event => {
     const box = scene.current.getBoundingClientRect();
