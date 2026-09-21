@@ -1,0 +1,76 @@
+/* Saturated atmospheres built from static gradients: vivid, but repaint-cheap. */
+body[data-color-mode='visual'] {
+  --site-bg:#170205;
+  --site-surface:#2b060b;
+  --site-surface-2:#430a12;
+  --site-muted:#d7a098;
+  --site-line:#7a221f;
+  background:
+    radial-gradient(ellipse 70% 42% at 12% 8%,rgba(255,38,27,.24),transparent 72%),
+    radial-gradient(ellipse 55% 50% at 92% 32%,rgba(255,103,28,.13),transparent 72%),
+    linear-gradient(145deg,#210306 0%,#100104 58%,#230504 100%)!important;
+}
+body[data-color-mode='motion'] {
+  --site-bg:#080018;
+  --site-surface:#16043a;
+  --site-surface-2:#2a0960;
+  --site-muted:#c0afea;
+  --site-line:#55339a;
+  background:
+    radial-gradient(ellipse 65% 48% at 14% 12%,rgba(113,47,255,.32),transparent 70%),
+    radial-gradient(ellipse 60% 54% at 88% 30%,rgba(255,36,196,.19),transparent 73%),
+    radial-gradient(ellipse 48% 40% at 52% 92%,rgba(28,79,255,.18),transparent 72%),
+    linear-gradient(145deg,#100027 0%,#050010 55%,#17002d 100%)!important;
+}
+body[data-color-mode='code'] {
+  --site-bg:#001108;
+  --site-surface:#032719;
+  --site-surface-2:#06432a;
+  --site-muted:#9cd8b6;
+  --site-line:#167044;
+  background:
+    radial-gradient(ellipse 68% 48% at 10% 12%,rgba(35,255,128,.22),transparent 70%),
+    radial-gradient(ellipse 58% 48% at 90% 27%,rgba(0,224,190,.17),transparent 72%),
+    linear-gradient(145deg,#002313 0%,#000b05 56%,#002719 100%)!important;
+}
+.showcaseStack { background:transparent!important; }
+body[data-color-mode] .showcaseStack > section:first-child {
+  background:
+    radial-gradient(circle at 50% 46%,rgba(var(--site-accent-rgb),.29),transparent 34%),
+    radial-gradient(ellipse 70% 44% at 8% 8%,rgba(var(--site-accent-rgb),.16),transparent 72%),
+    radial-gradient(ellipse 60% 50% at 94% 88%,rgba(var(--site-accent-rgb),.11),transparent 70%),
+    linear-gradient(145deg,color-mix(in srgb,var(--site-bg) 76%,var(--site-accent) 24%),var(--site-bg) 58%,color-mix(in srgb,var(--site-bg) 84%,var(--site-accent) 16%))!important;
+}
+body[data-color-mode] .showcaseStack > section:nth-child(2) {
+  background:
+    radial-gradient(circle at var(--x) var(--y),rgba(var(--site-accent-rgb),.25),transparent 31%),
+    linear-gradient(120deg,var(--site-surface-2),var(--site-bg) 58%,var(--site-surface))!important;
+  box-shadow:inset 0 0 180px rgba(var(--site-accent-rgb),.1)!important;
+}
+body[data-color-mode] .showcaseStack > div:last-child,
+body[data-color-mode] .showcaseStack > div:last-child > section {
+  background:
+    radial-gradient(ellipse 65% 45% at 85% 10%,rgba(var(--site-accent-rgb),.09),transparent 73%),
+    var(--site-bg)!important;
+}
+body[data-color-mode] .showcaseStack > div:last-child > section:nth-of-type(3) {
+  background:
+    radial-gradient(ellipse 80% 52% at 50% 0,rgba(var(--site-accent-rgb),.14),transparent 68%),
+    var(--site-surface)!important;
+}
+body[data-color-mode] .showcaseStack > div:last-child > section:nth-of-type(5) {
+  background:
+    radial-gradient(ellipse 68% 70% at 82% 22%,rgba(var(--site-accent-rgb),.2),transparent 70%),
+    linear-gradient(145deg,var(--site-surface-2),var(--site-bg))!important;
+}
+body[data-color-mode] .siteHeader {
+  background:color-mix(in srgb,var(--site-bg) 86%,var(--site-accent) 14%)!important;
+  box-shadow:0 8px 35px rgba(var(--site-accent-rgb),.08);
+}
+body[data-color-mode] .card,
+body[data-color-mode] .feature {
+  background:linear-gradient(145deg,var(--site-surface-2),var(--site-surface))!important;
+}
+@media(max-width:760px){
+  body[data-color-mode] .showcaseStack > section:first-child { background:radial-gradient(circle at 50% 38%,rgba(var(--site-accent-rgb),.25),transparent 32%),var(--site-bg)!important; }
+}
