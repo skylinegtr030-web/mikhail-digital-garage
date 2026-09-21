@@ -1,0 +1,55 @@
+name: Deploy to VPS
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+concurrency:
+  group: production-vps
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: SSH deploy
+    if: ${{ vars.VPS_DEPLOY_ENABLED == 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: 22
+          command_timeout: 18m
+          script: |
+            set -eu
+            PROJECT_DIR=/opt/projects/mikhail-digital-garage
+            REPOSITORY=https://github.com/skylinegtr030-web/mikhail-digital-garage.git
+
+            if [ ! -d "$PROJECT_DIR/.git" ]; then
+              mkdir -p "$PROJECT_DIR"
+              git clone "$REPOSITORY" "$PROJECT_DIR"
+            fi
+
+            cd "$PROJECT_DIR"
+            git fetch origin main
+            git reset --hard origin/main
+            docker compose build --pull
+            docker compose up -d --remove-orphans
+
+            attempt=0
+            until [ "$(docker inspect --format='{{.State.Health.Status}}' mikhail-digital-garage-web 2>/dev/null || true)" = "healthy" ]; do
+              attempt=$((attempt + 1))
+              if [ "$attempt" -ge 40 ]; then
+                docker compose logs --tail=150 web
+                exit 1
+              fi
+              sleep 3
+            done
+
+            docker image prune -f
+            echo "=== Deploy completed at $(date -u) ==="

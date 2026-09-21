@@ -1,0 +1,4 @@
+http://garage.84.201.143.53.nip.io, https://garage.84.201.143.53.nip.io {
+    import common
+    reverse_proxy mikhail-digital-garage-web:3000
+}
