@@ -4,6 +4,7 @@ import './performance.css';
 import './vivid-backgrounds.css';
 import './lab-aggressive.css';
 import './lab-motion.css';
+import './modern-polish.css';
 
 export default function Template({ children }) {
   return children;

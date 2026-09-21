@@ -1,0 +1,139 @@
+/* Modern polish: preserves the expressive composition and adds cleaner 2026 UI finish. */
+:root {
+  --modern-radius-sm:14px;
+  --modern-radius:22px;
+  --modern-radius-lg:32px;
+  --modern-glass:color-mix(in srgb,var(--site-surface) 72%,transparent);
+  --modern-line:color-mix(in srgb,var(--site-text) 13%,transparent);
+  --modern-shadow:0 24px 80px rgba(0,0,0,.24);
+}
+html {
+  scroll-behavior:smooth;
+  scrollbar-color:var(--site-accent) color-mix(in srgb,var(--site-bg) 94%,var(--site-text));
+  scrollbar-width:thin;
+}
+body {
+  font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-kerning:normal;
+  font-optical-sizing:auto;
+  font-feature-settings:"kern" 1,"liga" 1,"calt" 1;
+  text-rendering:optimizeLegibility;
+  -webkit-font-smoothing:antialiased;
+  background-color:var(--site-bg);
+}
+::selection { color:var(--site-bg); background:var(--site-accent); }
+::-webkit-scrollbar { width:9px; height:9px; }
+::-webkit-scrollbar-track { background:color-mix(in srgb,var(--site-bg) 94%,var(--site-text)); }
+::-webkit-scrollbar-thumb { border:2px solid var(--site-bg); border-radius:999px; background:var(--site-accent); }
+button,a,input { -webkit-tap-highlight-color:transparent; }
+a,button,[role='button'] {
+  transition:color .25s ease,background-color .25s ease,border-color .25s ease,box-shadow .3s ease,transform .3s cubic-bezier(.16,1,.3,1),opacity .25s ease;
+}
+a:focus-visible,button:focus-visible,input:focus-visible,[role='button']:focus-visible {
+  outline:2px solid var(--site-accent);
+  outline-offset:5px;
+  box-shadow:0 0 0 6px rgba(var(--site-accent-rgb),.15);
+}
+h1,h2,h3 { text-wrap:balance; }
+p { text-wrap:pretty; }
+/* Header receives a restrained floating-glass finish without changing its layout. */
+body > header {
+  border-bottom-color:var(--modern-line)!important;
+  background:color-mix(in srgb,var(--site-bg) 72%,transparent)!important;
+  box-shadow:0 10px 45px rgba(0,0,0,.12);
+  -webkit-backdrop-filter:blur(20px) saturate(1.25);
+  backdrop-filter:blur(20px) saturate(1.25);
+}
+body > header a:hover,body > header button:hover { color:var(--site-accent); }
+/* Refined surfaces everywhere except the deliberately brutal transformation lab. */
+.showcaseStack {
+  overflow:clip;
+  background:
+    radial-gradient(circle at 12% 8%,rgba(var(--site-accent-rgb),.055),transparent 24%),
+    var(--site-bg);
+}
+.showcaseStack > section:not(:nth-child(3)),
+.showcaseStack > div:last-child > section {
+  border-bottom-color:var(--modern-line)!important;
+  box-shadow:inset 0 -1px 0 rgba(var(--site-accent-rgb),.045);
+}
+.showcaseStack > section:not(:nth-child(3)) [class*='card'],
+.showcaseStack > section:not(:nth-child(3)) [class*='panel'],
+.showcaseStack > div:last-child [class*='card'],
+.showcaseStack > div:last-child [class*='panel'],
+.showcaseStack > div:last-child article {
+  border-color:var(--modern-line)!important;
+  border-radius:var(--modern-radius);
+  box-shadow:0 12px 38px rgba(0,0,0,.13),inset 0 1px 0 rgba(255,255,255,.045);
+  -webkit-backdrop-filter:blur(12px) saturate(1.08);
+  backdrop-filter:blur(12px) saturate(1.08);
+  transition:border-color .3s ease,box-shadow .35s cubic-bezier(.16,1,.3,1),transform .35s cubic-bezier(.16,1,.3,1),background-color .3s ease;
+}
+@media(hover:hover) and (pointer:fine) {
+  .showcaseStack > section:not(:nth-child(3)) [class*='card']:hover,
+  .showcaseStack > section:not(:nth-child(3)) [class*='panel']:hover,
+  .showcaseStack > div:last-child [class*='card']:hover,
+  .showcaseStack > div:last-child [class*='panel']:hover,
+  .showcaseStack > div:last-child article:hover {
+    z-index:2;
+    border-color:color-mix(in srgb,var(--site-accent) 55%,transparent)!important;
+    box-shadow:0 22px 70px rgba(0,0,0,.24),0 0 0 1px rgba(var(--site-accent-rgb),.1),inset 0 1px 0 rgba(255,255,255,.08);
+    transform:translateY(-5px);
+  }
+}
+/* Small technical labels become cleaner UI chips. */
+.showcaseStack > section:not(:nth-child(3)) [class*='eyebrow'],
+.showcaseStack > div:last-child [class*='eyebrow'],
+.showcaseStack > div:last-child [class*='kicker'],
+.showcaseStack > div:last-child [class*='label'] {
+  width:max-content;
+  max-width:100%;
+  padding:7px 10px;
+  border:1px solid var(--modern-line);
+  border-radius:999px;
+  background:color-mix(in srgb,var(--site-surface) 68%,transparent);
+  -webkit-backdrop-filter:blur(10px);
+  backdrop-filter:blur(10px);
+  letter-spacing:.13em;
+}
+/* Modern media treatment while leaving the comparison window untouched. */
+.showcaseStack > section:not(:nth-child(3)) img,
+.showcaseStack > div:last-child img,
+.showcaseStack > section:not(:nth-child(3)) video,
+.showcaseStack > div:last-child video {
+  border-radius:var(--modern-radius-lg);
+  box-shadow:var(--modern-shadow);
+}
+/* CTAs keep their existing colors and geometry but feel more tactile. */
+.showcaseStack > section:not(:nth-child(3)) a[class],
+.showcaseStack > section:not(:nth-child(3)) button,
+.showcaseStack > div:last-child a[class],
+.showcaseStack > div:last-child button {
+  position:relative;
+  isolation:isolate;
+}
+@media(hover:hover) and (pointer:fine) {
+  .showcaseStack > section:not(:nth-child(3)) a[class]:hover,
+  .showcaseStack > section:not(:nth-child(3)) button:hover,
+  .showcaseStack > div:last-child a[class]:hover,
+  .showcaseStack > div:last-child button:hover {
+    box-shadow:0 12px 34px rgba(var(--site-accent-rgb),.18);
+  }
+}
+/* Theme-specific rounding remains recognisable, now with a cleaner finish. */
+body[data-color-mode='visual'] { --modern-radius:10px; --modern-radius-lg:18px; }
+body[data-color-mode='motion'] { --modern-radius:30px; --modern-radius-lg:44px; }
+body[data-color-mode='code'] { --modern-radius:4px; --modern-radius-lg:8px; }
+@media(max-width:760px) {
+  :root { --modern-radius:17px; --modern-radius-lg:22px; }
+  body > header { -webkit-backdrop-filter:blur(14px) saturate(1.15); backdrop-filter:blur(14px) saturate(1.15); }
+  .showcaseStack > section:not(:nth-child(3)) [class*='card'],
+  .showcaseStack > section:not(:nth-child(3)) [class*='panel'],
+  .showcaseStack > div:last-child [class*='card'],
+  .showcaseStack > div:last-child [class*='panel'] { box-shadow:0 10px 28px rgba(0,0,0,.12); }
+}
+@media(prefers-reduced-motion:reduce) {
+  html { scroll-behavior:auto; }
+  a,button,[role='button'],
+  .showcaseStack [class*='card'],.showcaseStack [class*='panel'] { transition:none!important; }
+}
