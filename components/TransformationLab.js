@@ -1,10 +1,44 @@
 'use client';
 
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styles from './TransformationLab.module.css';
+
+const bursts = [
+  ['СКУЧНОЕ НЕ ЗАПОМИНАЮТ', 'SYSTEM MESSAGE'],
+  ['КОД МОЖЕТ БЫТЬ ГРОМКИМ', 'DIGITAL GARAGE'],
+  ['НЕ ДЕЛАЙ КАК У ВСЕХ', 'RULE 001'],
+  ['ДВИЖЕНИЕ — ЧАСТЬ СМЫСЛА', 'MOTION MANIFESTO'],
+  ['ИНТЕРФЕЙС ДОЛЖЕН ОТВЕЧАТЬ', 'LIVE SIGNAL'],
+  ['ИДЕЯ СИЛЬНЕЕ ШАБЛОНА', 'NO TEMPLATE'],
+  ['НЕ САЙТ. ВПЕЧАТЛЕНИЕ.', 'BUILD DIFFERENT'],
+  ['ТИШИНА — ТОЖЕ ЭФФЕКТ', 'CONTROL THE CHAOS']
+];
 
 export default function TransformationLab() {
   const lab = useRef(null);
+  const [burst, setBurst] = useState({ id: 0, text: bursts[0][0], tag: bursts[0][1], x: 72, y: 28, r: -5 });
+
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    let timer;
+    let previous = 0;
+    const throwQuote = () => {
+      let next = Math.floor(Math.random() * bursts.length);
+      if (next === previous) next = (next + 1) % bursts.length;
+      previous = next;
+      setBurst({
+        id: Date.now(),
+        text: bursts[next][0],
+        tag: bursts[next][1],
+        x: 55 + Math.random() * 34,
+        y: 17 + Math.random() * 58,
+        r: -8 + Math.random() * 16
+      });
+      timer = window.setTimeout(throwQuote, 2400 + Math.random() * 1500);
+    };
+    timer = window.setTimeout(throwQuote, 1300);
+    return () => window.clearTimeout(timer);
+  }, []);
 
   const change = event => {
     lab.current?.style.setProperty('--split', `${event.currentTarget.value}%`);
@@ -44,7 +78,22 @@ export default function TransformationLab() {
           <strong className={styles.sideLabel}>AFTER / EXPERIENCE</strong>
         </div>
 
-        <div className={styles.divider} aria-hidden="true"><span>↔</span></div>
+        <blockquote
+          key={burst.id}
+          className="labQuote"
+          style={{ '--quote-x': `${burst.x}%`, '--quote-y': `${burst.y}%`, '--quote-r': `${burst.r}deg` }}
+          aria-live="polite"
+        >
+          {burst.text}<small>{burst.tag}</small>
+        </blockquote>
+
+        <div className="labEnergy" aria-hidden="true">
+          <i /><i /><i /><i /><i /><i /><i /><i />
+        </div>
+        <div className={styles.divider} aria-hidden="true">
+          <span><b>↔</b></span>
+          <em>BREAK / TRANSFORM / REBUILD</em>
+        </div>
         <input className={styles.range} type="range" min="12" max="88" defaultValue="50" onInput={change} aria-label="Сравнить обычный и креативный интерфейс" />
       </div>
 
