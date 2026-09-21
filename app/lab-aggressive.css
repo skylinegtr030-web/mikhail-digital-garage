@@ -1,0 +1,148 @@
+/* Aggressive skin for the third showcase module: static, sharp, inexpensive. */
+.showcaseStack > section:nth-child(3) {
+  background:
+    linear-gradient(118deg,transparent 0 47%,rgba(var(--site-accent-rgb),.09) 47.2% 47.8%,transparent 48%),
+    radial-gradient(ellipse 65% 38% at 82% 18%,rgba(var(--site-accent-rgb),.23),transparent 70%),
+    var(--site-bg)!important;
+}
+.showcaseStack > section:nth-child(3)::after {
+  content:'NO TEMPLATE  /  NO BORING  /  BUILD THE UNEXPECTED  /  NO TEMPLATE  /  NO BORING  /  BUILD THE UNEXPECTED';
+  position:absolute;
+  z-index:4;
+  left:-8%;
+  right:-8%;
+  top:34%;
+  overflow:hidden;
+  padding:11px 0;
+  color:var(--site-bg);
+  background:var(--site-accent);
+  font:900 clamp(11px,1.2vw,18px)/1 Arial,sans-serif;
+  letter-spacing:.13em;
+  white-space:nowrap;
+  transform:rotate(-4deg);
+  box-shadow:0 12px 40px rgba(var(--site-accent-rgb),.22);
+  pointer-events:none;
+}
+.showcaseStack > section:nth-child(3) > div:first-child { position:relative; z-index:5; }
+.showcaseStack > section:nth-child(3) > div:first-child h2 {
+  margin-top:35px;
+  font-size:clamp(58px,10.7vw,166px);
+  line-height:.66;
+  letter-spacing:-.085em;
+  transform:rotate(-1.2deg);
+}
+.showcaseStack > section:nth-child(3) > div:first-child h2 span {
+  width:max-content;
+  max-width:100%;
+  padding-inline:.025em;
+  text-shadow:9px 10px 0 rgba(0,0,0,.32);
+}
+.showcaseStack > section:nth-child(3) > div:first-child h2 span:nth-child(1) {
+  clip-path:polygon(0 0,100% 6%,96% 100%,3% 89%);
+  color:var(--site-bg);
+  background:var(--site-text);
+  transform:translateX(-1vw) rotate(-1deg);
+}
+.showcaseStack > section:nth-child(3) > div:first-child h2 span:nth-child(2) {
+  margin-top:-.04em;
+  margin-right:3vw;
+  -webkit-text-stroke:2px var(--site-text);
+  transform:rotate(1.7deg);
+}
+.showcaseStack > section:nth-child(3) > div:first-child h2 span:nth-child(3) {
+  margin-top:-.03em;
+  transform:translateX(2vw) rotate(-1deg);
+  text-shadow:8px 9px 0 var(--site-text),16px 18px 0 rgba(var(--site-accent-rgb),.13);
+}
+.showcaseStack > section:nth-child(3) > div:first-child > p {
+  position:relative;
+  z-index:6;
+  padding:16px 18px;
+  border-left:4px solid var(--site-accent);
+  background:color-mix(in srgb,var(--site-bg) 82%,transparent);
+  box-shadow:18px 18px 0 color-mix(in srgb,var(--site-accent) 16%,transparent);
+}
+/* Comparison window */
+.showcaseStack > section:nth-child(3) > div:nth-child(2) {
+  z-index:5;
+  overflow:hidden;
+  border:2px solid var(--site-accent)!important;
+  clip-path:polygon(2% 0,96% 0,96% 3%,100% 3%,100% 95%,97% 95%,97% 100%,4% 100%,4% 97%,0 97%,0 6%,2% 6%);
+  transform:rotate(-.8deg);
+  box-shadow:14px 16px 0 var(--site-accent),32px 42px 90px rgba(0,0,0,.42)!important;
+  transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s;
+}
+.showcaseStack > section:nth-child(3) > div:nth-child(2):hover {
+  transform:rotate(0) scale(1.006);
+  box-shadow:7px 8px 0 var(--site-accent),25px 34px 80px rgba(0,0,0,.38)!important;
+}
+.showcaseStack > section:nth-child(3) > div:nth-child(2)::before,
+.showcaseStack > section:nth-child(3) > div:nth-child(2)::after {
+  position:absolute;
+  z-index:20;
+  top:50%;
+  padding:8px 11px;
+  font:900 clamp(11px,1.1vw,16px)/1 monospace;
+  letter-spacing:.15em;
+  pointer-events:none;
+}
+.showcaseStack > section:nth-child(3) > div:nth-child(2)::before {
+  content:'GENERIC';
+  left:3%;
+  color:#222;
+  border:3px solid #333;
+  transform:rotate(-12deg);
+  opacity:.65;
+}
+.showcaseStack > section:nth-child(3) > div:nth-child(2)::after {
+  content:'LIVE EXPERIENCE';
+  right:3%;
+  color:var(--site-bg);
+  background:var(--site-accent);
+  transform:rotate(7deg);
+  box-shadow:6px 7px 0 var(--site-text);
+}
+/* Left side gets xerox texture; right side gets harder contrast. */
+.showcaseStack > section:nth-child(3) > div:nth-child(2) > div:nth-child(1) {
+  filter:grayscale(1) contrast(.88);
+  background:
+    repeating-linear-gradient(9deg,rgba(0,0,0,.035) 0 1px,transparent 1px 5px),
+    #d5d5cf!important;
+}
+.showcaseStack > section:nth-child(3) > div:nth-child(2) > div:nth-child(2) {
+  filter:saturate(1.22) contrast(1.07);
+  box-shadow:inset 0 0 120px rgba(var(--site-accent-rgb),.12);
+}
+/* Divider: a sharp illuminated cut. */
+.showcaseStack > section:nth-child(3) > div:nth-child(2) > div:nth-child(3) {
+  width:4px!important;
+  background:var(--site-text)!important;
+  box-shadow:0 0 0 2px var(--site-accent),0 0 34px 10px rgba(var(--site-accent-rgb),.55)!important;
+}
+.showcaseStack > section:nth-child(3) > div:nth-child(2) > div:nth-child(3) > span {
+  width:58px!important;
+  height:58px!important;
+  border:2px solid var(--site-text);
+  border-radius:0!important;
+  box-shadow:7px 8px 0 var(--site-text);
+  transform:translate(-50%,-50%) rotate(45deg)!important;
+}
+.showcaseStack > section:nth-child(3) > div:nth-child(2) > div:nth-child(3) > span::first-letter { transform:rotate(-45deg); }
+/* Bottom legend becomes a technical rail. */
+.showcaseStack > section:nth-child(3) > div:nth-child(3) {
+  margin-top:34px;
+  padding:14px 16px;
+  border-top:1px solid var(--site-accent);
+  border-bottom:1px solid var(--site-line);
+  background:repeating-linear-gradient(135deg,rgba(var(--site-accent-rgb),.12) 0 8px,transparent 8px 16px);
+}
+.showcaseStack > section:nth-child(3) > div:nth-child(3) span { color:var(--site-text); font-weight:700; }
+body[data-color-mode='motion'] .showcaseStack > section:nth-child(3) > div:nth-child(2) { clip-path:polygon(3% 0,97% 2%,100% 48%,97% 98%,3% 100%,0 52%); border-radius:38px; }
+body[data-color-mode='code'] .showcaseStack > section:nth-child(3) > div:nth-child(2) { transform:none; clip-path:polygon(0 0,96% 0,96% 4%,100% 4%,100% 100%,4% 100%,4% 96%,0 96%); box-shadow:10px 10px 0 var(--site-accent)!important; }
+@media(max-width:760px){
+  .showcaseStack > section:nth-child(3)::after{top:28%;font-size:9px;padding:8px 0}
+  .showcaseStack > section:nth-child(3)>div:first-child h2{font-size:15vw;line-height:.72}
+  .showcaseStack > section:nth-child(3)>div:nth-child(2){transform:none;clip-path:none;box-shadow:7px 8px 0 var(--site-accent)!important}
+  .showcaseStack > section:nth-child(3)>div:nth-child(2)::before,.showcaseStack > section:nth-child(3)>div:nth-child(2)::after{font-size:9px;top:42%}
+}
+@media(prefers-reduced-motion:reduce){.showcaseStack > section:nth-child(3)>div:nth-child(2){transition:none}}
