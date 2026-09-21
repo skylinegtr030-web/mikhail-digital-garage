@@ -1,0 +1,4 @@
+/* The legacy ACT II / CAPABILITIES grid is intentionally removed from the visible experience. */
+.showcaseStack > div:last-child > section:nth-of-type(3) {
+  display:none!important;
+}
