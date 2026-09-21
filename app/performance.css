@@ -1,4 +1,4 @@
-/* Keep the visual system, skip work that cannot currently be seen. */
+/* Aggressive performance mode: preserve interaction, remove continuous repaint sources. */
 .showcaseStack > section:nth-child(n+2),
 .showcaseStack > div:last-child > section {
   content-visibility:auto;
@@ -6,39 +6,40 @@
   contain:layout paint style;
 }
 .showcaseStack > section:first-child,
-.showcaseStack > section:nth-child(2) {
-  isolation:isolate;
-}
-.showcaseStack > section:first-child canvas,
-.showcaseStack > section:first-child > div:nth-of-type(4),
-.showcaseStack > section:nth-child(2) > div:nth-of-type(3),
-.showcaseStack > section:nth-child(2) > div:nth-of-type(4) {
-  will-change:transform;
-}
-/* The new hero already owns cursor lighting; remove the old fixed duplicate. */
+.showcaseStack > section:nth-child(2) { isolation:isolate; }
+.showcaseStack > section:first-child canvas { will-change:contents; }
+.showcaseStack > section:first-child > div:nth-of-type(4) { will-change:transform; }
+.showcaseStack > div:last-child > div:nth-child(2),
 .showcaseStack > div:last-child > div:nth-child(3) { display:none!important; }
-/* Static grain keeps texture without repainting a viewport-sized layer every 180ms. */
-.showcaseStack > div:last-child > div:nth-child(2) {
-  animation:none!important;
-  opacity:.035!important;
-  transform:translate3d(0,0,0)!important;
+body.themePulse::after {
+  mix-blend-mode:normal!important;
+  animation-duration:.22s!important;
+  opacity:.14;
 }
+/* Render the selected accent directly; never hue-rotate a large layer. */
+.showcaseStack > section:first-child > div:nth-of-type(4) {
+  filter:none!important;
+  background:radial-gradient(circle at 38% 32%,color-mix(in srgb,var(--site-accent) 42%,white) 0 2%,var(--site-accent) 10%,color-mix(in srgb,var(--site-accent) 45%,#080808) 34%,var(--site-bg) 57%,transparent 58%)!important;
+  box-shadow:0 0 38px rgba(var(--site-accent-rgb),.28),0 0 90px rgba(var(--site-accent-rgb),.12)!important;
+  animation:none!important;
+}
+.showcaseStack > section:first-child > div:nth-of-type(4)::before,
+.showcaseStack > section:first-child > div:nth-of-type(4)::after,
+.showcaseStack > section:first-child > div:nth-of-type(4) i {
+  filter:none!important;
+  animation-duration:40s!important;
+}
+body[data-color-mode] .showcaseStack > section:first-child canvas { filter:none!important; }
+body[data-color-mode='motion'] .showcaseStack > section:first-child > div:nth-of-type(4) { animation:none!important; }
+.showcaseStack > section:nth-child(2) > div:nth-of-type(2) { filter:none!important; }
 @media(max-width:900px){
   .showcaseStack > section:first-child,
   .showcaseStack > section:nth-child(2),
   .showcaseStack > div:last-child { backdrop-filter:none!important; }
-  .showcaseStack > section:first-child > div:nth-of-type(4),
+  .showcaseStack > section:first-child > div:nth-of-type(4) { box-shadow:0 0 34px rgba(var(--site-accent-rgb),.17)!important; }
   .showcaseStack > section:first-child > div:nth-of-type(4)::before,
-  .showcaseStack > section:first-child > div:nth-of-type(4)::after {
-    filter:none!important;
-    box-shadow:0 0 44px rgba(var(--site-accent-rgb),.2)!important;
-  }
-  body[data-color-mode='motion'] .showcaseStack > section:first-child > div:nth-of-type(4) {
-    animation:none!important;
-  }
-  .showcaseStack > section:nth-child(2) > div:nth-of-type(2) {
-    filter:none!important;
-  }
+  .showcaseStack > section:first-child > div:nth-of-type(4)::after,
+  .showcaseStack > section:first-child > div:nth-of-type(4) i { animation:none!important; }
 }
 @media(prefers-reduced-motion:reduce){
   .showcaseStack * { scroll-behavior:auto!important; }
