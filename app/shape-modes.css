@@ -1,0 +1,140 @@
+/* Geometry follows the selected creative mode. */
+.showcaseStack button,
+.showcaseStack a,
+.showcaseStack article,
+.showcaseStack [class*='framePicture'] {
+  transition:border-radius .75s cubic-bezier(.16,1,.3,1),clip-path .75s cubic-bezier(.16,1,.3,1),transform .55s cubic-bezier(.16,1,.3,1),background .55s,color .55s;
+}
+
+/* Central energy form */
+.showcaseStack > section:first-child > div:nth-of-type(4),
+.showcaseStack > section:first-child > div:nth-of-type(4)::before,
+.showcaseStack > section:first-child > div:nth-of-type(4)::after,
+.showcaseStack > section:first-child > div:nth-of-type(4) i {
+  transition:border-radius 1s cubic-bezier(.16,1,.3,1),clip-path 1s cubic-bezier(.16,1,.3,1),transform .35s,filter .65s;
+}
+body[data-color-mode='visual'] .showcaseStack > section:first-child > div:nth-of-type(4) {
+  border-radius:0;
+  clip-path:polygon(10% 0,92% 7%,100% 84%,83% 100%,4% 91%,0 16%);
+  rotate:-5deg;
+}
+body[data-color-mode='visual'] .showcaseStack > section:first-child > div:nth-of-type(4)::before,
+body[data-color-mode='visual'] .showcaseStack > section:first-child > div:nth-of-type(4)::after,
+body[data-color-mode='visual'] .showcaseStack > section:first-child > div:nth-of-type(4) i {
+  border-radius:0;
+  clip-path:polygon(8% 0,100% 12%,90% 100%,0 87%);
+}
+body[data-color-mode='motion'] .showcaseStack > section:first-child > div:nth-of-type(4) {
+  border-radius:42% 58% 63% 37% / 55% 38% 62% 45%;
+  clip-path:none;
+  animation:globalBlob 8s ease-in-out infinite alternate;
+}
+body[data-color-mode='motion'] .showcaseStack > section:first-child > div:nth-of-type(4)::before,
+body[data-color-mode='motion'] .showcaseStack > section:first-child > div:nth-of-type(4)::after,
+body[data-color-mode='motion'] .showcaseStack > section:first-child > div:nth-of-type(4) i {
+  border-radius:58% 42% 35% 65% / 43% 57% 43% 57%;
+  clip-path:none;
+}
+body[data-color-mode='code'] .showcaseStack > section:first-child > div:nth-of-type(4) {
+  border-radius:2px;
+  clip-path:polygon(12% 0,88% 0,88% 8%,100% 8%,100% 88%,90% 88%,90% 100%,10% 100%,10% 91%,0 91%,0 12%,12% 12%);
+  rotate:0deg;
+}
+body[data-color-mode='code'] .showcaseStack > section:first-child > div:nth-of-type(4)::before,
+body[data-color-mode='code'] .showcaseStack > section:first-child > div:nth-of-type(4)::after,
+body[data-color-mode='code'] .showcaseStack > section:first-child > div:nth-of-type(4) i {
+  border-radius:0;
+  clip-path:polygon(0 0,100% 0,100% 82%,82% 82%,82% 100%,0 100%);
+}
+
+/* Three interactive mode panels */
+.showcaseStack > section:nth-child(2) > div:nth-of-type(4) {
+  transition:border-radius .8s cubic-bezier(.16,1,.3,1),clip-path .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1);
+}
+body[data-color-mode='visual'] .showcaseStack > section:nth-child(2) > div:nth-of-type(4) {
+  border-radius:0;
+  clip-path:polygon(3% 0,100% 0,97% 100%,0 92%);
+  transform:skewX(-4deg) rotate(-.5deg);
+}
+body[data-color-mode='visual'] .showcaseStack > section:nth-child(2) > div:nth-of-type(4) button {
+  border-radius:0;
+  clip-path:polygon(3% 0,100% 4%,96% 100%,0 94%);
+}
+body[data-color-mode='motion'] .showcaseStack > section:nth-child(2) > div:nth-of-type(4) {
+  border-radius:999px;
+  clip-path:none;
+  transform:none;
+  padding:5px;
+  gap:5px;
+  background:color-mix(in srgb,var(--site-accent) 25%,transparent);
+}
+body[data-color-mode='motion'] .showcaseStack > section:nth-child(2) > div:nth-of-type(4) button {
+  border-radius:999px;
+  clip-path:none;
+}
+body[data-color-mode='code'] .showcaseStack > section:nth-child(2) > div:nth-of-type(4) {
+  border-radius:0;
+  clip-path:polygon(0 0,97% 0,97% 4%,100% 4%,100% 100%,3% 100%,3% 96%,0 96%);
+  transform:none;
+  gap:2px;
+  background:var(--site-line);
+}
+body[data-color-mode='code'] .showcaseStack > section:nth-child(2) > div:nth-of-type(4) button {
+  border-radius:0;
+  clip-path:polygon(0 0,94% 0,94% 7%,100% 7%,100% 100%,0 100%);
+}
+
+/* Hero and global controls */
+body[data-color-mode='visual'] .showcaseStack > section:first-child button,
+body[data-color-mode='visual'] .showcaseStack > section:first-child a {
+  border-radius:0;
+  clip-path:polygon(5% 0,100% 0,95% 100%,0 88%);
+}
+body[data-color-mode='motion'] .showcaseStack > section:first-child button,
+body[data-color-mode='motion'] .showcaseStack > section:first-child a {
+  border-radius:999px;
+  clip-path:none;
+}
+body[data-color-mode='code'] .showcaseStack > section:first-child button,
+body[data-color-mode='code'] .showcaseStack > section:first-child a {
+  border-radius:2px;
+  clip-path:polygon(0 0,94% 0,94% 12%,100% 12%,100% 100%,6% 100%,6% 88%,0 88%);
+}
+
+/* Capability cards */
+body[data-color-mode='visual'] .showcaseStack > div:last-child > section:nth-of-type(3) a {
+  border-radius:0;
+  clip-path:polygon(0 0,96% 0,100% 12%,96% 100%,4% 96%,0 82%);
+}
+body[data-color-mode='motion'] .showcaseStack > div:last-child > section:nth-of-type(3) a {
+  border-radius:42% 58% 28% 72% / 18% 34% 66% 82%;
+  clip-path:none;
+}
+body[data-color-mode='motion'] .showcaseStack > div:last-child > section:nth-of-type(3) a:nth-child(even) {
+  border-radius:68% 32% 63% 37% / 42% 67% 33% 58%;
+}
+body[data-color-mode='code'] .showcaseStack > div:last-child > section:nth-of-type(3) a {
+  border-radius:0;
+  clip-path:polygon(0 0,92% 0,92% 6%,100% 6%,100% 100%,8% 100%,8% 94%,0 94%);
+}
+
+/* Process frames and finale button */
+body[data-color-mode='visual'] .showcaseStack > div:last-child > section:nth-of-type(4) article > div:first-child { border-radius:0; clip-path:polygon(4% 0,100% 8%,95% 100%,0 91%); }
+body[data-color-mode='motion'] .showcaseStack > div:last-child > section:nth-of-type(4) article > div:first-child { border-radius:48% 52% 36% 64% / 62% 34% 66% 38%; clip-path:none; }
+body[data-color-mode='code'] .showcaseStack > div:last-child > section:nth-of-type(4) article > div:first-child { border-radius:0; clip-path:polygon(0 0,96% 0,96% 9%,100% 9%,100% 100%,4% 100%,4% 91%,0 91%); }
+body[data-color-mode='visual'] .showcaseStack > div:last-child > section:nth-of-type(5) a { border-radius:0; transform:skewX(-5deg); }
+body[data-color-mode='motion'] .showcaseStack > div:last-child > section:nth-of-type(5) a { border-radius:999px; padding-inline:28px; }
+body[data-color-mode='code'] .showcaseStack > div:last-child > section:nth-of-type(5) a { border-radius:0; clip-path:polygon(0 0,96% 0,96% 16%,100% 16%,100% 100%,4% 100%,4% 84%,0 84%); }
+
+@keyframes globalBlob {
+  0% { border-radius:42% 58% 63% 37% / 55% 38% 62% 45%; }
+  50% { border-radius:64% 36% 42% 58% / 37% 66% 34% 63%; }
+  100% { border-radius:35% 65% 55% 45% / 68% 31% 69% 32%; }
+}
+@media(max-width:760px){
+  body[data-color-mode='motion'] .showcaseStack > section:nth-child(2) > div:nth-of-type(4){border-radius:36px;padding:4px}
+  body[data-color-mode='motion'] .showcaseStack > div:last-child > section:nth-of-type(3) a{border-radius:42px}
+}
+@media(prefers-reduced-motion:reduce){
+  .showcaseStack > section:first-child > div:nth-of-type(4){animation:none!important}
+}
