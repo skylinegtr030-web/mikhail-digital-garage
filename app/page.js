@@ -2,6 +2,7 @@ import CinematicHome from '../components/CinematicHome';
 import ShowcaseHero from '../components/ShowcaseHero';
 import CreativeBridge from '../components/CreativeBridge';
 import TransformationLab from '../components/TransformationLab';
+import ProcessOverdrive from '../components/ProcessOverdrive';
 
 export default function HomePage() {
   return (
@@ -10,6 +11,7 @@ export default function HomePage() {
       <CreativeBridge />
       <TransformationLab />
       <CinematicHome />
+      <ProcessOverdrive />
     </div>
   );
 }
