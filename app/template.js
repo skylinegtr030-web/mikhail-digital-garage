@@ -8,6 +8,7 @@ import './modern-polish.css';
 import './remove-capabilities.css';
 import './process-overdrive.css';
 import './capability-polish.css';
+import './capability-content.css';
 
 export default function Template({ children }) {
   return children;
