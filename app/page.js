@@ -1,5 +1,11 @@
 import CinematicHome from '../components/CinematicHome';
+import ShowcaseHero from '../components/ShowcaseHero';
 
 export default function HomePage() {
-  return <CinematicHome />;
+  return (
+    <div className="showcaseStack">
+      <ShowcaseHero />
+      <CinematicHome />
+    </div>
+  );
 }
