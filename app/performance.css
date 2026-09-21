@@ -1,0 +1,46 @@
+/* Keep the visual system, skip work that cannot currently be seen. */
+.showcaseStack > section:nth-child(n+2),
+.showcaseStack > div:last-child > section {
+  content-visibility:auto;
+  contain-intrinsic-size:auto 760px;
+  contain:layout paint style;
+}
+.showcaseStack > section:first-child,
+.showcaseStack > section:nth-child(2) {
+  isolation:isolate;
+}
+.showcaseStack > section:first-child canvas,
+.showcaseStack > section:first-child > div:nth-of-type(4),
+.showcaseStack > section:nth-child(2) > div:nth-of-type(3),
+.showcaseStack > section:nth-child(2) > div:nth-of-type(4) {
+  will-change:transform;
+}
+/* The new hero already owns cursor lighting; remove the old fixed duplicate. */
+.showcaseStack > div:last-child > div:nth-child(3) { display:none!important; }
+/* Static grain keeps texture without repainting a viewport-sized layer every 180ms. */
+.showcaseStack > div:last-child > div:nth-child(2) {
+  animation:none!important;
+  opacity:.035!important;
+  transform:translate3d(0,0,0)!important;
+}
+@media(max-width:900px){
+  .showcaseStack > section:first-child,
+  .showcaseStack > section:nth-child(2),
+  .showcaseStack > div:last-child { backdrop-filter:none!important; }
+  .showcaseStack > section:first-child > div:nth-of-type(4),
+  .showcaseStack > section:first-child > div:nth-of-type(4)::before,
+  .showcaseStack > section:first-child > div:nth-of-type(4)::after {
+    filter:none!important;
+    box-shadow:0 0 44px rgba(var(--site-accent-rgb),.2)!important;
+  }
+  body[data-color-mode='motion'] .showcaseStack > section:first-child > div:nth-of-type(4) {
+    animation:none!important;
+  }
+  .showcaseStack > section:nth-child(2) > div:nth-of-type(2) {
+    filter:none!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .showcaseStack * { scroll-behavior:auto!important; }
+  .showcaseStack > section:first-child canvas { display:none!important; }
+}
