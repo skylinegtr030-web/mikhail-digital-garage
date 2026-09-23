@@ -1,0 +1,131 @@
+name: Deploy architecture preview to VPS
+
+on:
+  push:
+    branches:
+      - refactor/architecture-v2
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-mikhail-digital-garage-v2
+  cancel-in-progress: true
+
+env:
+  DEPLOY_PATH: /opt/projects/mikhail-digital-garage-v2
+  PREVIEW_HOST: garage-v2.84.201.143.53.nip.io
+  PREVIEW_URL: https://garage-v2.84.201.143.53.nip.io
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Verify application build
+        run: |
+          npm ci
+          npm run build
+
+      - name: Configure SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.VPS_SSH_KEY }}
+
+      - name: Trust VPS host key
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -p "${{ secrets.VPS_PORT }}" -H "${{ secrets.VPS_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Create deployment directory
+        run: |
+          ssh -p "${{ secrets.VPS_PORT }}" "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}" \
+            "mkdir -p '${DEPLOY_PATH}' '${DEPLOY_PATH}/runtime/db' '${DEPLOY_PATH}/runtime/uploads'"
+
+      - name: Synchronize application
+        run: |
+          rsync -az --delete \
+            --exclude '.git/' \
+            --exclude '.env' \
+            --exclude 'node_modules/' \
+            --exclude '.next/' \
+            --exclude 'runtime/' \
+            --exclude 'backups/' \
+            -e "ssh -p ${{ secrets.VPS_PORT }}" \
+            ./ "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:${DEPLOY_PATH}/"
+
+      - name: Deploy database and application
+        run: |
+          ssh -p "${{ secrets.VPS_PORT }}" "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}" \
+            "DEPLOY_PATH='${DEPLOY_PATH}' PREVIEW_HOST='${PREVIEW_HOST}' sh -s" <<'REMOTE'
+          set -eu
+          cd "$DEPLOY_PATH"
+
+          if [ ! -f .env ]; then
+            umask 077
+            DB_PASSWORD=$(openssl rand -hex 32)
+            AUTH_SECRET=$(openssl rand -hex 32)
+            cat > .env <<EOF
+          COMPOSE_PROJECT_NAME=mikhail-digital-garage-v2
+          NEXT_PUBLIC_SITE_URL=https://$PREVIEW_HOST
+          POSTGRES_DB=digital_garage
+          POSTGRES_USER=digital_garage
+          POSTGRES_PASSWORD=$DB_PASSWORD
+          DATABASE_URL=postgresql://digital_garage:$DB_PASSWORD@db:5432/digital_garage
+          AUTH_SECRET=$AUTH_SECRET
+          ADMIN_EMAIL=
+          ADMIN_PASSWORD_HASH=
+          UPLOAD_DIR=/app/runtime/uploads
+          MAX_UPLOAD_SIZE=20971520
+          TELEGRAM_BOT_TOKEN=
+          TELEGRAM_CHAT_ID=
+          EOF
+            chmod 600 .env
+          fi
+
+          chmod +x scripts/migrate-db.sh scripts/backup-db.sh scripts/restore-db.sh
+          docker compose config --quiet
+          docker compose pull db
+          docker compose up -d --wait --wait-timeout 120 db
+          ./scripts/migrate-db.sh
+          docker compose up -d --build --wait --wait-timeout 180 web
+
+          CADDY_FILE=/opt/caddy/Caddyfile
+          if [ ! -f "$CADDY_FILE" ]; then
+            echo "Caddyfile not found: $CADDY_FILE"
+            exit 1
+          fi
+
+          if ! grep -q "^${PREVIEW_HOST}" "$CADDY_FILE"; then
+            cat >> "$CADDY_FILE" <<EOF
+
+          ${PREVIEW_HOST} {
+              encode zstd gzip
+              reverse_proxy mikhail-digital-garage-v2:3000
+          }
+          EOF
+          fi
+
+          docker exec caddy caddy validate --config /etc/caddy/Caddyfile
+          docker exec caddy caddy reload --config /etc/caddy/Caddyfile
+          docker compose ps
+          docker compose exec -T web wget -qO- http://127.0.0.1:3000/api/health
+          REMOTE
+
+      - name: Verify public preview
+        run: |
+          for attempt in $(seq 1 24); do
+            if curl --fail --silent --show-error --max-time 10 "$PREVIEW_URL/api/health"; then
+              exit 0
+            fi
+            echo "Preview is not ready yet: attempt $attempt/24"
+            sleep 5
+          done
+          exit 1

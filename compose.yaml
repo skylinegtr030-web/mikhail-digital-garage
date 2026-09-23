@@ -1,9 +1,8 @@
-name: mikhail-digital-garage
+name: ${COMPOSE_PROJECT_NAME:-mikhail-digital-garage-v2}
 
 services:
   db:
     image: postgres:16-alpine
-    container_name: mikhail-digital-garage-db
     restart: unless-stopped
     env_file:
       - .env
@@ -30,8 +29,6 @@ services:
       context: .
       dockerfile: Dockerfile
       target: runner
-    image: mikhail-digital-garage-web:latest
-    container_name: mikhail-digital-garage-web
     restart: unless-stopped
     init: true
     depends_on:
@@ -49,8 +46,10 @@ services:
     volumes:
       - ./runtime/uploads:/app/runtime/uploads
     networks:
-      - web
-      - app_internal
+      web:
+        aliases:
+          - mikhail-digital-garage-v2
+      app_internal:
     healthcheck:
       test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:3000/api/health >/dev/null || exit 1"]
       interval: 15s
